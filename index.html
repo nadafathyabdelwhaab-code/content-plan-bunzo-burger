@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BUNZO Content Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: airy white page, only red / blue / white. Sticky pill nav (Videos / Posts), one clean card per selected item. */
+:root {
+  --red: #E4202C;
+  --blue: #1E40D8;
+  --ink: #0A1A5E;
+  --paper: #FFFFFF;
+  --display: "Bangers", "Cairo", Impact, sans-serif;
+  --body: "Cairo", "Segoe UI", Tahoma, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+.wordmark, h1 .en, .card-head h2, .field h3 { letter-spacing: 1.5px; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.8;
+}
+a { color: var(--blue); }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+
+/* Header */
+.top { background: var(--paper); padding: 56px 24px 36px; }
+.top-inner { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+.brand { display: flex; align-items: center; gap: 14px; direction: ltr; }
+.brand img { height: 72px; width: auto; display: block; border-radius: 50%; border: 2px solid var(--blue); background: #fff; }
+.wordmark { font-family: var(--display); line-height: 0.95; display: none; direction: ltr; }
+.wordmark.show { display: block; }
+.wordmark .b1 { display: block; font-size: 64px; color: var(--red); }
+.wordmark .b2 { display: block; font-size: 30px; color: var(--blue); }
+.by {
+  direction: ltr; font-weight: 700; font-size: 15px; color: var(--blue);
+  border: 2px solid var(--blue); border-radius: 999px; padding: 0 16px;
+}
+h1 { margin: 0; font-size: clamp(30px, 6vw, 48px); line-height: 1.3; font-weight: 900; color: var(--ink); text-wrap: balance; }
+h1 .en { font-family: var(--display); color: var(--red); font-weight: 400; display: inline-block; direction: ltr; font-size: 1.2em; }
+
+/* Section switch + nav */
+.bar { position: sticky; top: 0; z-index: 5; background: var(--paper); border-top: 2px solid var(--blue); border-bottom: 2px solid var(--blue); }
+.bar-inner { max-width: 880px; margin: 0 auto; padding: 14px 24px 10px; display: flex; flex-direction: column; gap: 12px; }
+.switch { display: flex; gap: 10px; }
+.switch button {
+  font: inherit; font-weight: 700; cursor: pointer;
+  padding: 0 20px; border: 2px solid var(--blue); border-radius: 999px; background: var(--paper); color: var(--blue);
+}
+.switch button[aria-pressed="true"] { background: var(--blue); color: var(--paper); }
+.chips { display: flex; gap: 10px; overflow-x: auto; padding: 2px 2px 8px; scroll-snap-type: x proximity; }
+.chip {
+  flex: 0 0 auto; scroll-snap-align: start; cursor: pointer;
+  font: inherit; font-weight: 700; font-size: 15px; direction: ltr;
+  display: inline-flex; gap: 8px; align-items: center;
+  padding: 2px 16px 2px 6px; border: 2px solid var(--blue); border-radius: 999px; background: var(--paper); color: var(--blue);
+}
+.chip .n {
+  display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--blue); color: var(--paper); font-size: 13px; font-weight: 900;
+}
+.chip:hover { border-color: var(--red); }
+.chip[aria-selected="true"] { background: var(--red); border-color: var(--red); color: var(--paper); }
+.chip[aria-selected="true"] .n { background: var(--paper); color: var(--red); }
+
+/* Main */
+main { max-width: 880px; margin: 0 auto; padding: 44px 24px 80px; }
+.card { border: 2px solid var(--blue); border-radius: 22px; background: var(--paper); overflow: hidden; }
+.card-head { padding: 28px 30px; background: var(--blue); color: var(--paper); display: flex; flex-direction: column; gap: 10px; }
+.tag { align-self: flex-start; direction: ltr; font-weight: 700; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; border: 2px solid var(--paper); color: var(--paper); padding: 0 14px; border-radius: 999px; }
+.card-head h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(30px, 6vw, 46px); line-height: 1.15; direction: ltr; text-align: left; }
+.fields { display: grid; }
+.field { padding: 30px; border-top: 2px solid var(--blue); display: flex; flex-direction: column; gap: 14px; }
+.field:first-child { border-top: 0; }
+.field-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.field h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 26px; direction: ltr; color: var(--red); }
+.copy {
+  font: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+  padding: 0 16px; border: 2px solid var(--blue); border-radius: 999px; background: var(--paper); color: var(--blue);
+}
+.copy:hover { border-color: var(--red); color: var(--red); }
+.text { white-space: pre-wrap; margin: 0; max-width: 68ch; }
+.empty { border: 2px dashed var(--blue); border-radius: 14px; padding: 14px 18px; font-weight: 600; color: var(--blue); }
+.refbox { display: flex; flex-direction: column; gap: 8px; }
+.reflabel { align-self: flex-start; background: var(--red); color: var(--paper); font-weight: 700; padding: 0 14px; border-radius: 999px; font-size: 14px; direction: ltr; }
+.reflink { word-break: break-all; direction: ltr; text-align: left; font-weight: 700; }
+.refframe { align-self: flex-end; max-width: 100%; border: 2px solid var(--blue); border-radius: 16px; overflow: hidden; background: var(--paper); line-height: 0; }
+.refimg { display: block; width: auto; height: auto; max-width: 100%; max-height: 680px; }
+@media (max-width: 480px) { .refimg { max-height: 520px; } }
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; }
+.pager button {
+  font: inherit; font-weight: 700; cursor: pointer; padding: 2px 22px;
+  border: 2px solid var(--blue); border-radius: 999px; background: var(--paper); color: var(--blue);
+}
+.pager button:hover { background: var(--blue); color: var(--paper); }
+.pager button[disabled] { opacity: 0.35; cursor: default; background: var(--paper); color: var(--blue); }
+
+footer { background: var(--blue); color: var(--paper); padding: 22px 24px; text-align: center; font-weight: 700; }
+footer span { direction: ltr; display: inline-block; }
+/* English elements start from the left, Arabic from the right */
+.brand, .by { align-self: flex-end; }
+.switch, .chips, .field-top { direction: ltr; }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .top { padding: 36px 20px 28px; }
+  .card-head, .field { padding: 22px 20px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <img id="logoImg" src="logo.png" alt="BUNZO logo" onerror="this.style.display='none';document.getElementById('wm').classList.add('show')">
+      <div id="wm" class="wordmark" aria-label="BUNZO Burger"><span class="b1">BUNZO</span><span class="b2">BURGER</span></div>
+    </div>
+    <span class="by">by Nada Ayman</span>
+    <h1>كونتنت <span class="en">BUNZO</span> لشهر 12</h1>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="bar-inner">
+    <div class="switch" role="group" aria-label="القسم">
+      <button id="btnVideos" type="button" aria-pressed="true">Videos · 7</button>
+      <button id="btnPosts" type="button" aria-pressed="false">Posts · 8</button>
+    </div>
+    <div id="chips" class="chips" role="tablist" aria-label="Items"></div>
+  </div>
+</div>
+
+<main>
+  <section id="view" aria-live="polite"></section>
+</main>
+
+<footer>Content plan for <span>BUNZO</span> · December · <span>by Nada Ayman</span></footer>
+
+<script>
+/* Field kinds: "link" = reference URL, "image" = image path/URL, "text" = copy/script. Empty string shows a waiting box. */
+var VIDEO_FIELDS = [
+  ["ref", "Reference", "link", "في انتظار لينك الريفرنس."],
+  ["script", "Script", "text", "في انتظار السكريبت."],
+  ["caption", "Caption", "text", "في انتظار الكابشن."],
+  ["notes", "Production Notes", "text", "في انتظار نوتس الإنتاج (هنصور إزاي)."]
+];
+var POST_FIELDS = [
+  ["ref", "Reference", "image", "في انتظار صورة الريفرنس."],
+  ["brief", "Brief", "text", "في انتظار البريف."],
+  ["copy", "Creative Copy", "text", "في انتظار الكرييتيف كوبي."],
+  ["caption", "Caption", "text", "في انتظار الكابشن."]
+];
+var CAROUSEL_FIELDS = [
+  ["ref", "Reference", "image", "في انتظار صورة الريفرنس."],
+  ["brief", "Brief", "text", "في انتظار البريف."],
+  ["link", "Carousel Link", "link", "في انتظار لينك الكاروسيل."],
+  ["copy", "Creative Copy", "text", "في انتظار الكرييتيف كوبي."],
+  ["caption", "Caption", "text", "في انتظار الكابشن."]
+];
+
+var CAROUSEL_NO_DESIGN = CAROUSEL_FIELDS.filter(function (f) { return f[0] !== "design"; });
+
+var DATA = {
+  videos: [
+    { id: "v1", short: "Making", title: "Making Video", tag: "Making", fields: VIDEO_FIELDS },
+    { id: "v2", short: "Behind the Scenes", title: "Behind the Scenes", tag: "BTS", fields: VIDEO_FIELDS },
+    { id: "v3", short: "UGC 1", title: "UGC 1 · Eating & Talking", tag: "UGC", fields: VIDEO_FIELDS },
+    { id: "v4", short: "UGC 2 · 12 Questions", title: "UGC 2 · 12 Questions", tag: "UGC", fields: VIDEO_FIELDS },
+    { id: "v5", short: "Fun Video", title: "Fun Video", tag: "Fun", fields: VIDEO_FIELDS },
+    { id: "v6", short: "New Item · Mushroom", title: "New Item · Mushroom", tag: "New Item", fields: VIDEO_FIELDS },
+    { id: "v7", short: "Owner Order", title: "Owner Order", tag: "Owner", fields: VIDEO_FIELDS }
+  ],
+  posts: [
+    { id: "p1", short: "All Sandwiches", title: "Carousel · All Sandwiches", tag: "Menu Awareness", fields: CAROUSEL_FIELDS },
+    { id: "p2", short: "Mushroom", title: "Carousel · Mushroom", tag: "Product Highlight", fields: CAROUSEL_FIELDS },
+    { id: "p3", short: "Lifestyle", title: "Lifestyle Design", tag: "Order · Lifestyle", fields: POST_FIELDS },
+    { id: "p4", short: "Most Ordered", title: "Most Ordered Sandwich", tag: "Social Proof", fields: POST_FIELDS },
+    { id: "p5", short: "Offer", title: "Offer Design", tag: "Conversion", fields: POST_FIELDS },
+    { id: "p6", short: "Cravings", title: "Cravings Design", tag: "Product Desire", fields: POST_FIELDS },
+    { id: "p7", short: "Where to Order", title: "Where to Order", tag: "Delivery Platforms", fields: POST_FIELDS },
+    { id: "p8", short: "Carousel · Making", title: "Carousel · Making", tag: "Making", fields: CAROUSEL_NO_DESIGN }
+  ]
+};
+/* Fill values by item id, e.g. VALUES.v1 = { ref: "https://...", script: "...", caption: "...", notes: "..." } */
+var VALUES = {
+  p8: {
+    ref: "refs/p8.jpg",
+    link: "https://www.instagram.com/p/DaGaDVPmF8N/?img_index=8&jplx=MThkb2g1M2RnaTVicg==",
+    brief: "الكاروسيل 8 صور بمقاس 1080×1350 بكسل، بنفس فكرة المرجع بالظبط: خطوات تحضير ساندوتش من BUNZO، بس فريق BUNZO فيها بحجم صغير جدًا ويشتغلوا على الساندوتش الكبير كأنهم بيحضروه بإيديهم. من غير أي نصوص أو كتابة على الصور، ومن غير كرييتيف كوبي، وكلها صور طبيعية.\n\nالصورة 1: فريق BUNZO الصغير بيضغطوا كرة اللحمة على الجريل بمكبس كبير.\nالصورة 2: بيرشوا التتبيلة على اللحمة وهي بتتسمّش.\nالصورة 3: بيقلبوا الباتي على الجريل والبخار طالع.\nالصورة 4: بيحطوا شريحة الجبنة فوق الباتي.\nالصورة 5: العيش والباتي على السباتيولا، وفريق BUNZO بيجهزوا يركبوهم.\nالصورة 6: بيحطوا باقي مكونات الساندوتش على الباتي.\nالصورة 7: بيحطوا الصوص فوق المكونات من الزجاجة.\nالصورة 8: الساندوتش جاهز وفريق BUNZO قاعدين ووقفين عليه، والساندوتش كامل بشكل واضح وجذاب.\n\nلازم نحدد أنهي ساندوتش من المنيو هنصوره، عشان المكونات في الصور 6 و7 تتظبط عليه.",
+    copy: "مفيش كرييتيف كوبي للكاروسيل ده، ومفيش أي نصوص أو كتابة على الصور.",
+    caption: "تفاصيل كتير بنعيشها مع BUNZO BURGER 😌\nمن أول ما اللحمة تتحط على الجريل لحد آخر شوية صوص\nكل خطوة بنعملها بحب عشان نقدمهالك بحب ♥️😂\n\n📍 Downtown – برج العرب الجديدة\n📞 01034452184"
+  },
+  p1: {
+    ref: "refs/p1.jpg",
+    brief: "الكاروسيل 8 صور بمقاس 1080×1350 بكسل، وكلها صور طبيعية من تصويرنا ومن غير كرييتيف كوبي منفصل. الكلام على الصور هو اللي مكتوب في خانة Creative Copy بس.\n\nالصورة 1: مكتوب فيها كلمة MENU بخط كبير وتحتها صورة 4 ساندوتشات فوق بعض.\n\nالصورة 2: صورة ساندوتش BUNZO SMOKEY وفوقها اسمه ومكوناته زي المنيو بالظبط.\n\nالصورة 3: صورة ساندوتش BUNZO THOUSAND ISLAND وفوقها اسمه ومكوناته زي المنيو بالظبط.\n\nالصورة 4: صورة ساندوتش BUNZO CARAMELIZE ONIONS وفوقها اسمه ومكوناته زي المنيو بالظبط.\n\nالصورة 5: صورة ساندوتش BUNZO CLASSIC وفوقها اسمه ومكوناته زي المنيو بالظبط.\n\nالصورة 6: صورة ساندوتش BUNZO ZINGER وفوقها اسمه ومكوناته زي المنيو بالظبط.\n\nالصورة 7: صورة ساندوتش BUNZO MUSHROOM وفوقها اسمه ومكوناته.\n\nالصورة 8 (أوبشن): مكتوب فيها سؤال أنهي واحد مفضلك، مع أيقونات اللايك والتعليق والشير، وتحتها Borg Al Arab – Downtown Mall و 01034452184.",
+    copy: "الصورة 1\nMENU\n\nالصورة 2\nBUNZO SMOKEY\nبرجر مشوي مع صوص باربيكيو غني جبنة سايحة وطعم مدخن لا يقاوم\n\nالصورة 3\nBUNZO THOUSAND ISLAND\nبرجر لحم طازة مع جبنة أمريكان سايحة وخضار فريش وصوص الآيلاند المميز في كل قضمة\n\nالصورة 4\nBUNZO CARAMELIZE ONIONS\nبرجر لحم مع بصل مكرمل وصوص كريمي يديك توازن مثالي بين الحلو والمالح\n\nالصورة 5\nBUNZO CLASSIC\nبرجر تقليدي مع طعم أصلي مع جبنة كاتشب مسترد وخضار فريش\n\nالصورة 6\nBUNZO ZINGER\nCrispy chicken fillet with zinger sauce lettuce tomato onion and cheese\n\nالصورة 7\nBUNZO MUSHROOM\nبرجر لحم مع مشروم مشوي وجبنة سايحة\n\nالصورة 8 (أوبشن)\nWhat's your favorite thing you tried at Bunzo?\nAnd what will you try next?\nBorg Al Arab – Downtown Mall\n01034452184",
+    caption: "قولنا إيه أكتر حاجة جربتها في بانزو برجر وعجبتك 🍔😍\nوإيه الحاجة اللي هتجربها المرة الجاية؟ 👇🔥\n\n📍 Borg Al Arab – Downtown Mall\n📞 01034452184",
+    link: "https://www.instagram.com/p/DRS_kCLj9_0/?fqnt=cDNyYmlrZ3l1bTE2" },
+  p2: {
+    ref: "refs/p2.jpg",
+    brief: "المقاس لكل الصور 1080×1350 بكسل. بوست كاروسيل من 3 صور.\n\nالصورة الأولى: نفس تصميم البوستر في المرجع بالظبط، بس نشيل برجر أوكلاهوما ونحط مكانه صورة برجر المشروم بتاع بانزو بنفس الحجم والمكان في النص، بحيث يبان بوضوح المشروم والجبنة والباتي. نستبدل الكلمة الكبيرة OKLAHOMA بكلمة MUSHROOM بنفس الخط والحجم، ونغير الكلمة الصغيرة فوقها smashburger لـ Bunzo Burger. الخلفية بلون بانزو الأحمر أو باترن لوجو بانزو بدل الباترن الأزرق، ولوجو بانزو في الركن.\n\nالصورة التانية: نفس لقطة المرجع القريبة لإيد ماسكة البرجر من الجنب، بس نستبدلها بصورة أو فيديو قصير من عندنا لبرجر المشروم بتاع بانزو في إيد، بحيث المشروم والجبنة يبانوا من الجنب. من غير أي نصوص غير لوجو بانزو صغير في ركن.\n\nالصورة التالتة: نستبدل فيديو التحضير على الجريل في المرجع بفيديو من تصويرنا لتحضير برجر المشروم في بانزو من الجريل لحد ما البرجر يتجمّع. ولو مفيش فيديو جاهز نحط صورة قريبة لبرجر المشروم كامل، ومن غير نصوص غير لوجو بانزو صغير في ركن.",
+    copy: "الكرييتيف كوبي للكاروسيل ده مفيش فيه أي حاجة، مش هنكتب أي نص على الصور، والصور التلاتة طبيعية بس من تصويرنا لبرجر المشروم بتاع بانزو من غير أي كتابة أو تصميم عليها.",
+    caption: "لازم تجرب برجر المشروم من بانزو \nطعم مختلف من أول مرة 🔥\n\n📍 Borg Al Arab – Downtown Mall\n📞 01034452184",
+    link: "https://www.instagram.com/p/DY1g6aDiNgL/?img_index=3&gwpx=M2czM3lmbXd1NHNy" },
+  p3: {
+    ref: "refs/p3.jpg",
+    brief: "لايف ستايل شوت بنفس ستايل الريفرنس بهوية بانزو برجر\nصورة واقعية لبرجر وبطاطس وصوص من منتجات بانزو الفعلية\nتغيير الألوان لألوان هوية بانزو\nوضع لوجو بانزو في نفس أماكن وجود اللوجو في الريفرنس\nإضاءة شمس قوية\nالكتابة تحت على الشمال مع مساحة هادية وراها عشان تبقى واضحة\nاستخدام فونت بانزو",
+    copy: "ONE BITE AND YOU'RE HOOKED",
+    caption: "خد بالك ممكن متبقاش عايز تشارك حد فيه 👀🍔\nبرجر جوسي وبطاطس دهبي والصوص جنبهم\nCome get hooked at BUNZO BURGER\n📍 Borg Al Arab – Downtown Mall\n📞 Order now: 01034452184"
+  },
+  p4: {
+    ref: "refs/p4.jpg",
+    brief: "تصميم Most Ordered بنفس ستايل الريفرنس بهوية بانزو برجر\nصورة واقعية لبرجر Caramelized Onions الفعلي من بانزو والبصل المكرمل باين فيه\nالبرجر في النص وماسكاه إيد لابسة جلافز أسود\nالخلفية بألوان هوية بانزو\nالكتابة ورا البرجر كبيرة بعرض التصميم في ست سطور\nأول تلات سطور CARAMELIZED ONIONS\nآخر تلات سطور MOST ORDERED\nاستخدام فونت بانزو\nإضافة لوجو بانزو صغير في مكان واضح من غير ما يزحم التصميم",
+    copy: "CARAMELIZED ONIONS\nCARAMELIZED ONIONS\nCARAMELIZED ONIONS\nMOST ORDERED\nMOST ORDERED\nMOST ORDERED",
+    caption: "في سبب إن الكل بيرجع يطلبه ♥️\nوالبصل المكرمل عارف هو عمل إيه\nMeet our most ordered Caramelized Onions at BUNZO BURGER\n📍 Borg Al Arab – Downtown Mall\n📞 Order now: 01034452184"
+  },
+  p5: {
+    ref: "refs/p5.jpg",
+    brief: "الفكرة: بدل ما نعمل خصم 20% هنقدم اتنين برجر بسعر أقل من سعرهم في المنيو، فالعرض يبان أقوى من كلمة خصم ونبيع اتنين بدل واحد\n\nتصميم بوست 4:5 بمقاس 1080×1350 بنفس ستايل الريفرنس بهوية بانزو برجر\nصورة واقعية لاتنين برجر من منتجات بانزو الفعلية ماسكينهم إيدين\nتغيير الخلفية والكتابة لألوان هوية بانزو\nلوجو بانزو فوق في النص\nالعنوان 2 BURGERS كبير وهو أوضح عنصر عشان الاتنين برجر يبقوا أول حاجة تتشاف\nسعر العرض في دايرة مرسومة باليد وجنبها سهم على البرجر من غير كلمة خصم أو نسبة 20%\nزرار ORDER NOW تحت وتحته رقم الطلبات\nاستخدام فونت بانزو",
+    copy: "WHY HAVE ONE?\n2 BURGERS\nFOR ONLY [PRICE] EGP\nORDER NOW\n01034452184",
+    caption: "ليه تكتفي بواحد وإنت ممكن تاخد اتنين \nواحد ليك والتاني لصاحبك او ليك برضو لو مش ناوي تشارك\nGet 2 burgers for only [PRICE] EGP at BUNZO BURGER\n📍 Borg Al Arab – Downtown Mall\n📞 Order now: 01034452184"
+  },
+  p6: {
+    ref: "refs/p6.jpg",
+    brief: "تصميم بنفس الريفرنس مع تغيير الكرياتيف كوبي بس\nكلمة MUSHROOM فوق البرجر وكلمة BURGER تحته\nنفس شكل الكتابة المنحنية ومكانها حوالين البرجر\nاستخدام صورة Mushroom Burger الفعلي من بانزو والمشروم باين فيه",
+    copy: "MUSHROOM\nBURGER",
+    caption: "المشروم هنا مش مجرد إضافة 👀🍄\nده البطل اللي بيحلي الحكاية كلها\nYour new burger craving is waiting at BUNZO BURGER 🍔\nTry our Mushroom Burger\n📍 Borg Al Arab – Downtown Mall\n📞 Order now: 01034452184"
+  },
+  p7: {
+    ref: "refs/p7.jpg",
+    brief: "المقاس 1080×1350 بكسل بوست فيد.\nالترتيب من فوق لتحت: عنوان DELIVERY متكرر 3 مرات، وبعده الشنطة في النص وعليها النص مطبوع، وبعدها سطر فوق شريط المكاتب مكتوب فيه اطلب من أقرب مكتب ليك، وبعده شريط فيه 3 كروت متساوية كل كارت فيه مكان أيقونة اللوجو واسم المكتب ورقم التليفون، وتحت خالص عنوان بانزو برجر برج العرب داون تاون مول ورقم 01034452184.\nالنص على الشنطة: الأوردر ده ليك فين بيتك.\nأرقام التليفونات تكون أوضح وأكبر خط في الشريط عشان تتقري بسهولة من الموبايل، وسيبي مسافة كفاية بين الكروت عشان لوجوهات المكاتب ما تتلخبطش",
+    copy: "Headline (repeated 3 times)\nDELIVERY\n\nOn the bag | على الشنطة:\nThis order is for: YOU\nWhere: YOUR HOME",
+    caption: "لو مش هتقدر تأكل في بانزو داون تاون 🍔\nاطلب من أقرب مكتب ليك وبانزو هيوصلك لحد البيت 🛵🔥\n\n📍 برج العرب – داون تاون مول\n📞 01034452184"
+  },
+  v4: {
+    ref: "مفيش ريفرنس للفيديو ده.",
+    script: "مفيش سكريبت للفيديو ده. الأسئلة بتتسأل دايركت للزباين اللي جايين يشتروا من BUNZO بطريقة سؤال عادي من حد من الستاف، وهي 12 سؤال مش هتتصور كلها في فيديو واحد.\n\n1) إيه أهم بالنسبالك: حجم البرجر ولا طعمه؟\n2) هل السعر بيفرق معاك لو البرجر فعلًا يستاهل؟\n3) إيه اللي يخليك تقول إن ده أحسن برجر أكلته؟\n4) بتحب البرجر الكلاسيك ولا اللي فيه إضافات كتير؟\n5) إيه أهم حاجة في البرجر: اللحمة ولا الصوص ولا العيش؟\n6) إيه أكتر حاجة بتخلي تجربة الأكل مميزة بالنسبالك؟\n7) لو هتختار بين Beef Burger و Chicken Burger هتختار إيه؟\n8) Cheese زيادة ولا Sauce زيادة؟\n9) French Fries ولا Onion Rings؟\n10) Single Burger ولا Double Burger؟\n11) بتحب تجرب أصناف جديدة ولا بتطلب نفس الأوردر كل مرة؟\n12) لو برجر BUNZO هيتوصف بكلمة واحدة، هتقول إيه؟",
+    caption: "الكابشن بيتكتب مع كل فيديو حسب السؤال والإجابات اللي هتنزل فيه (هنكتبه بعد التصوير لما نبعت الإجابات).",
+    notes: "- الأسئلة بتتسأل بشكل عادي وتلقائي من حد من الستاف للزبون وهو بياخد أوردره أو بعد ما يخلص أكله.\n- مفيش سكريبت ولا تلقين. الإجابات لازم تكون منطقية وطبيعية ومش محفوظة، وكل زبون يرد بكلامه.\n- نصور إجابات أكتر من زبون على كل سؤال عشان نختار أحسن إجابات.\n- الكاميرا قريبة على وش الزبون وهو بيجاوب، والصوت نضيف وواضح.\n- ناخد موافقة الزبون قبل التصوير والنشر.\n- الأسئلة مش هتتصور في نفس الوقت ولا في فيديو واحد.\n- في الآخر بنجمع الإجابات المناسبة ونعمل فيديو لكل سؤال أو نقطة لوحدها."
+  },
+  v2: {
+    ref: "https://www.instagram.com/reel/DQplan2D6_a/?knvt=cTg5bzBubDZmdjJv",
+    script: "المقاس 1080×1920 بكسل ريلز 9:16، ومدته من 25 لـ 28 ثانية، وبنفس فكرة المرجع بالظبط: فيديو من ورا الكواليس لتصوير ساندوتش من BUNZO، وبعده الشكل النهائي للساندوتش بمكوناته.\n\nلقطة 1 (من 0 لـ 6 ثواني)\nلقطة واسعة لشيف BUNZO واقف على ترابيزة استانلس وبيجهز الساندوتش، والمصور جنبه بكاميرا على سلايدر. مكتوب أسفل الشاشة: 1 2 3 يلا\n\nلقطة 2 (من 6 لـ 12 ثانية)\nالشيف بيحط مكونات الساندوتش واحدة واحدة، والمصور بيصور من قريب. مكتوب أسفل الشاشة جمل قصيرة زي: يلا / وينفع تحط / حلو أوي\n\nلقطة 3 (من 12 لـ 16 ثانية)\nالشيف بيكمل التركيب، والمصور بيقرب بالكاميرا. مكتوب أسفل الشاشة: مرة كمان\n\nلقطة 4 (من 16 لـ 20 ثانية)\nلقطة سينمائية قريبة للساندوتش على خلفية غامقة وإضاءة دراماتيكية، والعيش بينزل فوقه والصوص بينزل على المكونات.\n\nلقطة 5 (من 20 لـ 25 ثانية)\nالساندوتش في إيد الشيف الجوانتي الأسود، ومكتوب حواليه أسماء المكونات بخط يد وأسهم زي المرجع.\n\nلقطة 6 (من 25 لـ 28 ثانية)\nالشيف بيحط الساندوتش على اللوح بالسباتيولا وبيخلص التصوير.\n\nلقطة 7\nشاشة أخيرة: لوجو BUNZO BURGER والعنوان والرقم. ده الوحيد اللي فيه لوجو في الفيديو كله.",
+    caption: "بنتعب في تحضيره زي ما بنتعب في تصويره 🎬🍔\nالجديد من BUNZO اطلب حاجة غير اللي اتعودت عليها 🔥\n\n📍 Downtown – برج العرب الجديدة\n📞 01034452184",
+    notes: "- التصوير طولي 9:16، واللقطات الأولى بتتصور واسعة والمصور والشيف باينين في الكادر.\n- الشيف بيلبس جوانتي أسود ويونيفورم موحد، والترابيزة استانلس نضيفة.\n- لقطة الساندوتش النهائية بتتصور في استوديو صغير بإضاءة جانبية دراماتيكية وخلفية غامقة.\n- الكلام المكتوب أسفل الشاشة بلون أصفر وبخط عريض وواضح، في أول لقطات الفيديو بس.\n- أسماء المكونات في لقطة 5 بتتكتب بخط يد، وأسهم تشاور على كل مكون في الساندوتش.\n- الصوت طبيعي من التصوير، وصوت الجريل، وموسيقى خفيفة.\n- مفيش لوجو ولا ووترمارك طول الفيديو، واللوجو والعنوان والرقم في الشاشة الأخيرة بس.\n- لازم نحدد أنهي ساندوتش هنصوره عشان نكتب مكوناته في لقطة 5."
+  },
+  v5: {
+    ref: "https://www.instagram.com/reel/DddZAXRMBv0/?dmpr=MWF5Y2hyeWdpODh6MA==",
+    script: "المقاس 1080×1920 بكسل ريلز 9:16، ومدته من 20 لـ 23 ثانية، ومن غير فويس أوفر ومن غير نصوص أو لوجو طول الفيديو.\n\nلقطة 1 (من 0 لـ 3 ثواني)\nشاب قاعد في BUNZO ماسك ساندوتش BUNZO وبيبص عليه بإعجاب قبل أول قضمة.\n\nلقطة 2 (من 3 لـ 5 ثواني)\nلقطة قريبة للتليفون على الترابيزة وهو بيرن، وعلى الشاشة مكتوب حبيبتي.\n\nلقطة 3 (من 5 لـ 9 ثواني)\nالشاب يبص للتليفون ويتجاهله، ويرجع ياكل وهو مستمتع ومبسوط.\n\nلقطة 4 (من 9 لـ 13 ثانية)\nالبنت برا BUNZO بتتصل بيه وشكلها متضايقة وبتدور عليه.\n\nلقطة 5 (من 13 لـ 17 ثانية)\nالبنت تدخل BUNZO وتشوفه قاعد، وتقعد جنبه وتبص على الساندوتش.",
+    caption: "في كل الحالات BUNZO أهم من أي حاجة، إلا في الحالة دي 😅🍔\nده أقل رد فعل طبيعي لأي حد بياكل BUNZO BURGER 🔥\n\n📍 Borg Al Arab – Downtown Mall\n📞 01034452184",
+    notes: "- التصوير طولي 9:16، وكل المشاهد جوه BUNZO ما عدا لقطة البنت برا.\n- لقطات الشاب بتتصور قريبة من وشه ومن الجنب بإضاءة دافية.\n- لقطة التليفون قريبة جدًا على الترابيزة جنب ساندوتش BUNZO، والاسم على الشاشة (حبيبتي) واضح.\n- ساندوتش BUNZO يبان في أغلب اللقطات وهو البطل في الفيديو.\n- تمثيل طبيعي وتلقائي من غير مبالغة.\n- الصوت طبيعي من المكان ورنة التليفون، من غير موسيقى أو كلام.\n- مفيش لوجو ولا نصوص ولا ووترمارك على الشاشة من أول الفيديو لحد لقطة 6."
+  },
+  v3: {
+    ref: "https://www.instagram.com/reel/DfZi3vfxL5j/?gwpx=MTVxazVudGdpc24yNQ==",
+    script: "المقاس 1080×1920 بكسل ريلز 9:16، ومدته من 13 لـ 15 ثانية، ومن غير صوت ومن غير فويس أوفر. النص المكتوب هو اللي بيحكي الفكرة، والتصوير بنفس فكرة المرجع بالظبط.\n\nلقطة 1 (من 0 لـ 3 ثواني)\nضيف قاعد على ترابيزة وقدامه ساندوتش من BUNZO، وبيتكلم ويشاور بإيده. مكتوب فوق الشاشة: الناس عندها معارف في بنوك وشركات ومعارفي أنا\n\nلقطة 2 (من 3 لـ 6 ثواني)\nواحد من فريق BUNZO بيقرب من الترابيزة، لابس يونيفورم غامق وجوانتي ومعاه طبق.\n\nلقطة 3 (من 6 لـ 10 ثواني)\nالشخص من الفريق بيحط للضيف إضافة على الترابيزة زي بطاطس أو صوص، وبيرتب الطبق، والضيف مبسوط.\n\nلقطة 4 (من 10 لـ 12 ثانية)\nالضيف بيبص للكاميرا وبيبتسم، وساندوتش BUNZO باين قدامه.\n\nلقطة 5 (من 12 لـ 14 ثانية)\nشاشة أخيرة: لوجو BUNZO BURGER واسم الفرع Borg Al Arab – Downtown Mall ورقم 01034452184. ده الوحيد اللي فيه لوجو في الفيديو.",
+    caption: "إحنا في BUNZO بنحب ندلع الكلاينتس بتوعنا 🍔❤️\nوإنتوا كمان ممكن تبقوا في أقرب وقت من الكلاينتس المفضلين للمكان وتشوفوا دلع BUNZO عامل إزاي 🔥\n\n📍 Borg Al Arab – Downtown Mall\n📞 01034452184",
+    notes: "- التصوير طولي 9:16، والكاميرا ثابتة على مستوى الترابيزة من قدام، وبتشوف الضيف والساندوتش وفريق BUNZO في الخلفية.\n- الفيديو من غير أي صوت من الأول للآخر، ومن غير موسيقى أو فويس أوفر.\n- النص الوحيد على الشاشة في الأول، فوق، بخط عربي كبير وواضح بلونين زي المرجع.\n- الضيف يتصرف بشكل طبيعي وتلقائي، وفريق BUNZO بيدخل اللقطة كأنه بيدلعه.\n- فريق BUNZO لابس يونيفورم موحد وجوانتي، والمكان نضيف والإضاءة دافية.\n- ساندوتش BUNZO يبان بوضوح طول الفيديو.\n- اللوجو والعنوان والرقم في الشاشة الأخيرة بس، ومفيش لوجو ولا ووترمارك طول الفيديو."
+  },
+  v1: {
+    ref: "https://www.instagram.com/reel/DaWPeUSiBwK/?fqnt=eHVnbm5hM3k1cWE3",
+    script: "المقاس 1080×1920 بكسل ريلز 9:16، ومدته من 20 لـ 25 ثانية، ومن غير فويس أوفر.\n\nلقطة 1 (من 0 لـ 3 ثواني)\nلقطة قريبة على الجريل واللحمة بتتسمّش بالمكبس، ومعاها صوت الجريل.\n\nلقطة 2 (من 3 لـ 7 ثواني)\nالباتي بيتقلب والجبنة بتتحط عليه وتسيح.\n\nلقطة 3 (من 7 لـ 11 ثانية)\nالباتي التاني بيتحط فوق الأول ومعاه جبنة تانية ومكونات الساندوتش اللي بنصوره.\n\nلقطة 4 (من 11 لـ 15 ثانية)\nالعيش بيتحط من فوق بالسباتيولا، والإيد لابسة جوانتي أسود زي الريفرنس.\n\nلقطة 5 (من 15 لـ 19 ثانية)\nالساندوتش بيتنقل على لوح خشب أو رخام، وبيتصور هيرو من الجنب بإضاءة نضيفة.\n\nلقطة 6 (من 19 لـ 22 ثانية)\nالسكينة بتقطع الساندوتش من النص، والجبنة سايحة والطبقات باينة.\n\nلقطة 7 (من 22 لـ 25 ثانية)\nشاشة أخيرة: لوجو BUNZO BURGER واسم الفرع Borg Al Arab – Downtown Mall و 01034452184.",
+    caption: "(اسم الساندوتش) معمول بكل حب 🍔❤️\nجربه وهيبقى ساندوتشك المفضل 🔥\n\n📍 Borg Al Arab – Downtown Mall\n📞 01034452184",
+    notes: "- التصوير طولي 9:16 بكاميرا قريبة من الجريل وعلى مستوى الإيد.\n- الإيد لابسة جوانتي أسود، والجريل نضيف، والبخار يبان في اللقطات.\n- لقطات الجبنة وهي بتسيح وقطع الساندوتش تتصور سلو موشن 60 فريم.\n- الصوت: صوت الجريل والموسيقى، من غير كلام.\n- من أول الفيديو لحد لقطة 6: مفيش لوجو ولا نصوص ولا ووترمارك على الشاشة خالص.\n- اللوجو والعنوان والرقم في الشاشة الأخيرة بس.\n- الإضاءة دافية وطبيعية، والخلفية نضيفة من غير أي حاجة تلهي عن الساندوتش.\n- التصوير يتعمل على ساندوتش واحد من الأول للآخر، عشان الفيديو يبقى متصل."
+  },
+  v6: {
+    ref: "https://www.instagram.com/reel/DUDTo88DLbp/?fqnt=OXIyMjd1cXp1MW51",
+    script: "ملحوظة: مفيش سكريبت محفوظ. نور بتتكلم بطريقتها وبطبيعتها (عربي أو إنجليش)، والنقاط دي ترتيب الكلام بس.\n\n1) التقديم\nنور تقول بطريقتها: بصفتي صاحبة BUNZO BURGER، قررت أقول لكم على الآيتم الجديد، هو مشروم برجر.\n\n2) إظهار الباكج أو الساندوتش\nتوري الباكج أو الساندوتش للكاميرا.\n\n3) الإعلان\nتقول بطريقتها: دلوقتي تقدروا تجربوه من BUNZO، أو تطلبوه يوصل لكم لحد البيت.\n\n4) الخاتمة\nتطلب منهم يقولولها رأيهم.",
+    caption: "دلوقتي نقدر نقول لكم إن النيو آيتم بقى جاهز 🍄🍔\nمشروم برجر من BUNZO BURGER\n\nتقدروا تطلبوه دلوقتي من BUNZO أو من مكاتب التوصيل المتاحة 🛵🔥\n\n📍 Borg Al Arab – Downtown Mall\n📞 Order now: 01034452184",
+    notes: "الستايل: نور بتتكلم بطبيعتها وبأسلوبها، من غير سكريبت محفوظ.\n\nمكان التصوير:\n- قدام المكان نفسه، ويكون المكان واسم BUNZO BURGER باين وراها بوضوح.\n- الإضاءة كويسة، وصوت واضح من غير ضوضاء.\n\nالتصوير:\n- فيديو رأسي 9:16 (1080×1920)، كاميرا موبايل.\n\nاللقطات:\n1) نور بتتكلم للكاميرا والمكان وراها.\n2) توري الباكج أو الساندوتش للكاميرا، ويكون واضح في الكادر.\n3) نور بتقول إنه متاح للتجربة من BUNZO أو للتوصيل لحد البيت.\n\nالمونتاج:\n- لوجو BUNZO في آخر الفيديو.\n- ترجمة على الشاشة بالعربي والمصطلحات بالإنجليش."
+  },
+  v7: {
+    ref: "https://vt.tiktok.com/ZSshsHGbb/",
+    script: "ملحوظة: مفيش كلام محفوظ. نور بتتكلم بطبيعتها وبأسلوبها، والنقاط دي ترتيب اللقطات بس.\n\n1) البداية\nنور قدام الكاميرا، تقول بطريقتها إنها هتطلب أوردر من البيزنس بتاعها وتجرب الآيتم الجديد في المنيو: برجر المشروم.\n\n2) الطلب\nتطلب الأوردر زي أي عميل (من الرقم أو الدليفري)، وتقول إيه اللي طلبته.\n\n3) الانتظار\nتعليق عفوي وهي مستنية الأوردر.\n\n4) وصول الأوردر\nتفتح الشنطة وتقول أول انطباع على الشكل والريحة.\n\n5) أول قضمة\nرد فعلها الحقيقي على أول قضمة، وتوصف طعم المشروم والجبنة والباتي بكلامها.\n\n6) الرأي\nتقول رأيها بصراحة في برجر المشروم.\n\n7) الخاتمة\nتطلب من المتابعين يجربوه ويقولوا رأيهم، ويقولوا أكتر حاجة عايزين نعملها تاني ونضيفها في المنيو.",
+    caption: "طلبت أوردر من البيزنس بتاعي وده رأيي في البرجر 🍄🍔\nبرجر المشروم، نيو آيتم جديد في BUNZO BURGER\n\nجربوه دلوقتي وقولولي رأيكم 👇\nوقولولي إيه أكتر حاجة بتفكروا فيها أو عايزين نعملها في BUNZO BURGER، واحنا نعملها ونضيفها في المنيو 🔥\n\n📍 Borg Al Arab – Downtown Mall\n📞 Order now: 01034452184",
+    notes: "الستايل: طبيعي جدًا، نور بتجرب الأكل وتطلب زي أي عميل، من غير تمثيل ولا إعادة لقطات الرد الفعلي.\n\nالتصوير:\n- فيديو رأسي 9:16 (1080×1920)، كاميرا موبايل بإيد أو سيلفي.\n- إضاءة طبيعية، وصوت واضح من غير موسيقى وهي بتتكلم.\n\nاللقطات المطلوبة:\n1) نور بتتكلم للكاميرا في البداية.\n2) لحظة الطلب (الموبايل أو المكالمة).\n3) وصول الأوردر وفتح الشنطة، ولوجو BUNZO باين على الشنطة.\n4) لقطة قريبة لبرجر المشروم من الجنب، يبان فيها المشروم والجبنة والباتي.\n5) أول قضمة ورد الفعل.\n6) رأيها الأخير للكاميرا.\n\nملاحظات:\n- حضّروا برجر مشروم زيادة احتياطي لو اللقطة اتبوظت.\n- لوجو BUNZO صغير في ركن الفيديو في المونتاج.\n- ترجمة على الشاشة بالعربي والمصطلحات بالإنجليش."
+  }
+};
+
+var chipsEl = document.getElementById("chips");
+var viewEl = document.getElementById("view");
+var btnV = document.getElementById("btnVideos"), btnP = document.getElementById("btnPosts");
+var section = "videos";
+var current = 0;
+
+function el(tag, cls, text) {
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+function buildChips() {
+  chipsEl.textContent = "";
+  DATA[section].forEach(function (it, i) {
+    var b = el("button", "chip");
+    b.type = "button";
+    b.id = "chip-" + it.id;
+    b.setAttribute("role", "tab");
+    b.appendChild(el("span", "n", String(i + 1)));
+    b.appendChild(el("span", "", it.short));
+    b.addEventListener("click", function () { select(section, i, true); });
+    chipsEl.appendChild(b);
+  });
+}
+
+function safeUrl(u) { return /^(https?:\/\/|[A-Za-z0-9_\-\/\.]+\.(png|jpe?g|webp|gif)$|data:image\/)/i.test(u); }
+
+function field(def, value) {
+  var label = def[1], kind = def[2], waiting = def[3];
+  var f = el("div", "field");
+  var top = el("div", "field-top");
+  top.appendChild(el("h3", "", label));
+  if (value && kind === "text") {
+    var c = el("button", "copy", "نسخ");
+    c.type = "button";
+    c.addEventListener("click", function () {
+      try {
+        navigator.clipboard.writeText(value).then(function () { c.textContent = "اتنسخ ✓"; setTimeout(function () { c.textContent = "نسخ"; }, 1500); }, function () { c.textContent = "حدد وانسخ يدوي"; });
+      } catch (e) { c.textContent = "حدد وانسخ يدوي"; }
+    });
+    top.appendChild(c);
+  }
+  f.appendChild(top);
+  if (!value) {
+    f.appendChild(el("div", "empty", waiting));
+  } else if (kind === "link") {
+    var box = el("div", "refbox");
+    if (def[0] === "ref") box.appendChild(el("span", "reflabel", "Reference"));
+    if (/^https?:\/\//i.test(value)) {
+      var a = el("a", "reflink", value);
+      a.href = value; a.target = "_blank"; a.rel = "noopener noreferrer";
+      box.appendChild(a);
+    } else {
+      box.appendChild(el("span", "reflink", value));
+    }
+    f.appendChild(box);
+  } else if (kind === "image") {
+    if (safeUrl(value)) {
+      var frame = el("div", "refframe");
+      var im = el("img", "refimg");
+      im.src = value; im.alt = "Reference";
+      frame.appendChild(im);
+      f.appendChild(frame);
+    } else {
+      f.appendChild(el("p", "text", value));
+    }
+  } else {
+    f.appendChild(el("p", "text", value));
+  }
+  return f;
+}
+
+function render() {
+  var list = DATA[section], it = list[current], vals = VALUES[it.id] || {};
+  viewEl.textContent = "";
+  var card = el("article", "card");
+  var head = el("div", "card-head");
+  var kindWord = section === "videos" ? "Video " : "Post ";
+  head.appendChild(el("span", "tag", kindWord + (current + 1) + " / " + list.length + " · " + it.tag));
+  head.appendChild(el("h2", "", it.title));
+  card.appendChild(head);
+  var fs = el("div", "fields");
+  it.fields.forEach(function (def) { fs.appendChild(field(def, vals[def[0]] || "")); });
+  card.appendChild(fs);
+  viewEl.appendChild(card);
+
+  var pager = el("div", "pager");
+  var next = el("button", "", "التالي ←");
+  var prev = el("button", "", "→ السابق");
+  next.type = "button"; prev.type = "button";
+  prev.disabled = current === 0;
+  next.disabled = current === list.length - 1;
+  prev.addEventListener("click", function () { select(section, current - 1, true); });
+  next.addEventListener("click", function () { select(section, current + 1, true); });
+  pager.appendChild(prev);
+  pager.appendChild(next);
+  viewEl.appendChild(pager);
+}
+
+function select(sec, i, scrollUp) {
+  if (sec !== section) { section = sec; buildChips(); }
+  var list = DATA[section];
+  current = Math.max(0, Math.min(list.length - 1, i));
+  btnV.setAttribute("aria-pressed", section === "videos" ? "true" : "false");
+  btnP.setAttribute("aria-pressed", section === "posts" ? "true" : "false");
+  list.forEach(function (it, k) {
+    var b = document.getElementById("chip-" + it.id);
+    b.setAttribute("aria-selected", k === current ? "true" : "false");
+    if (k === current) { try { b.scrollIntoView({ inline: "center", block: "nearest" }); } catch (e) {} }
+  });
+  render();
+  try { history.replaceState(null, "", "#" + list[current].id); } catch (e) {}
+  if (scrollUp) { try { window.scrollTo({ top: 0 }); } catch (e) {} }
+}
+
+function fromHash() {
+  var h = (location.hash || "").replace("#", "");
+  var secs = ["videos", "posts"];
+  for (var s = 0; s < secs.length; s++) {
+    for (var i = 0; i < DATA[secs[s]].length; i++) if (DATA[secs[s]][i].id === h) return [secs[s], i];
+  }
+  return ["videos", 0];
+}
+
+btnV.addEventListener("click", function () { select("videos", 0, false); });
+btnP.addEventListener("click", function () { select("posts", 0, false); });
+window.addEventListener("hashchange", function () { var p = fromHash(); select(p[0], p[1], false); });
+
+buildChips();
+var start = fromHash();
+if (start[0] !== section) { section = start[0]; buildChips(); }
+select(start[0], start[1], false);
+</script>
+</body>
+</html>
